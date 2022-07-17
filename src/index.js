@@ -2,19 +2,23 @@ import "./style.css";
 import { addCard } from "./card-DOM";
 import { hideCardSearch } from "./card-search-bar";
 
+// default units temperatures are displayed in
 let tempUnits = "imperial";
 
+// gets weather location from input
 const updateWeather = ((cardID) => {
   const searchBar = document.getElementById(`location-search-${cardID}`);
   const searchLocation = searchBar.value;
   return prepCoordinates(searchLocation);
 });
 
+// prepares location name for getting coordinates
 function prepCoordinates(string) {
   const newString = string.replace(" ", "%20");
   return newString;
 }
 
+// manages most functions related to displaying weather on a card
 function setWeatherDisplay(cardID) {
   const place = updateWeather(cardID);
   fetch(`http://api.positionstack.com/v1/forward?access_key=ec78caf810296050ad14e7afa8074f9b&query=${place}&sun_module=1`, { mode: "cors" })
@@ -26,6 +30,7 @@ function setWeatherDisplay(cardID) {
     });
 }
 
+// prepares coordinates for getting weather data
 const packageCoordinates = ((cardID, cityLatLon) => {
   document.getElementById(`location${cardID}`).innerText = cityLatLon.data[0].name;
   const testLat = cityLatLon.data[0].latitude;
@@ -36,6 +41,7 @@ const packageCoordinates = ((cardID, cityLatLon) => {
   return coordinates;
 });
 
+// gets weather data based on coordinates
 function getWeather(cardID, coordinates) {
   const lat = coordinates[0];
   const lon = coordinates[1];
@@ -48,6 +54,7 @@ function getWeather(cardID, coordinates) {
     });
 }
 
+// changes card background based on weather conditions
 const setBackground = ((cardID, response) => {
   const conditions = response.weather[0].icon;
   console.log(conditions);
@@ -70,6 +77,7 @@ const setBackground = ((cardID, response) => {
   }
 });
 
+// displays weather data on card
 const displayWeather = ((cardID, weatherData) => {
   document.getElementById(`temp${cardID}`).innerText = `${Math.round(weatherData.main.temp)} °`;
   document.getElementById(`high${cardID}`).innerText = `${Math.round(weatherData.main.temp_max)} °`;
@@ -80,21 +88,7 @@ const displayWeather = ((cardID, weatherData) => {
   document.getElementById(`left-divide${cardID}`).setAttribute("class", "left-divide-show");
 });
 
-const displayTime = ((cardID, data) => {
-  const rawTime = data.time_12.toString();
-  const displayStart = rawTime.substring(0, 5);
-  const displayEnd = rawTime.substring(8, 12);
-  const fullTime = displayStart + displayEnd;
-
-  const time24 = data.time_24.toString();
-  let numericTime = time24.replaceAll(":", "");
-  numericTime = parseInt(numericTime);
-
-  // dayOrNight(cardID, numericTime);
-
-  document.getElementById(`time${cardID}`).innerText = fullTime;
-});
-
+// Gets time and date data for card
 function getTimeZone(cardID, coordinates) {
   const lat = coordinates[0];
   const lon = coordinates[1];
@@ -111,11 +105,27 @@ function getTimeZone(cardID, coordinates) {
     });
 }
 
+// displays the current time on card
+const displayTime = ((cardID, data) => {
+  const rawTime = data.time_12.toString();
+  const displayStart = rawTime.substring(0, 5);
+  const displayEnd = rawTime.substring(8, 12);
+  const fullTime = displayStart + displayEnd;
+
+  const time24 = data.time_24.toString();
+  let numericTime = time24.replaceAll(":", "");
+  numericTime = parseInt(numericTime);
+
+  document.getElementById(`time${cardID}`).innerText = fullTime;
+});
+
+// displays current date on the card
 const displayDate = ((cardID, date) => {
   const dateData = document.getElementById(`date${cardID}`);
   dateData.innerText = date;
 });
 
+// responds to event clicker by setting card data based on location
 const cardButtonHandler = ((e) => {
   const card = e.target.id;
   setWeatherDisplay(card);
@@ -133,9 +143,7 @@ const cardEventHandler = (() => {
 
 const celButton = document.getElementById("cel-button");
 
-function checkTempUnits() {
-}
-
+// switches units from F to C
 const switchToCel = (() => {
   tempUnits = "metric";
   document.getElementById("cel-button").setAttribute("class", "unit-button-active");
@@ -143,6 +151,7 @@ const switchToCel = (() => {
   checkTempUnits();
 });
 
+// switches units from C to F
 const switchToFar = (() => {
   tempUnits = "imperial";
   document.getElementById("far-button").setAttribute("class", "unit-button-active");

@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-vars */
 const addCard = ((num) => {
   const card = document.createElement("div");
   card.id = `card${num}`;
   card.classList.add("weather-card");
   document.getElementById("card-holder").appendChild(card);
 
+  // wrapper for card date points (excludes search bar and button)
   const cardWrapper = document.createElement("div");
   cardWrapper.classList.add("card-wrapper");
   cardWrapper.id = `card-wrapper-${num}`;
   card.appendChild(cardWrapper);
 
+  // name of card location
   const createLocation = (() => {
     const location = document.createElement("div");
     location.classList.add("location");
@@ -16,6 +19,7 @@ const addCard = ((num) => {
     cardWrapper.appendChild(location);
   })();
 
+  // current date at card location
   const createDate = (() => {
     const date = document.createElement("div");
     date.id = `date${num}`;
@@ -23,6 +27,7 @@ const addCard = ((num) => {
     cardWrapper.appendChild(date);
   })();
 
+  // current time at card location
   const createTimeData = (() => {
     const timeData = document.createElement("div");
     timeData.classList.add("time");
@@ -31,6 +36,7 @@ const addCard = ((num) => {
     cardWrapper.appendChild(timeData);
   })();
 
+  // current temperature of card location
   const createTemp = (() => {
     const temp = document.createElement("div");
     temp.classList.add("temp");
@@ -38,6 +44,7 @@ const addCard = ((num) => {
     cardWrapper.appendChild(temp);
   })();
 
+  // diving line towards bottom of card
   const createDividerDiv = (() => {
     const dividerDiv = document.createElement("div");
     dividerDiv.classList.add("divider-div");
@@ -55,6 +62,7 @@ const addCard = ((num) => {
     rightDivide.id = "right-divide";
   })();
 
+  // daily high and low for card location
   const createHighRowLow = (() => {
     const highLow = document.createElement("div");
     highLow.classList.add("high-low-row");
@@ -77,6 +85,7 @@ const addCard = ((num) => {
     })();
   })();
 
+  // description of current weather
   const createForecast = (() => {
     const forecast = document.createElement("div");
     forecast.classList.add("forecast");
@@ -85,6 +94,7 @@ const addCard = ((num) => {
     cardWrapper.appendChild(forecast);
   })();
 
+  // used to change display on card
   const createSearchRow = (() => {
     const searchRow = document.createElement("div");
     searchRow.classList.add("card-row");
@@ -113,4 +123,5 @@ const addCard = ((num) => {
   })();
 });
 
+// eslint-disable-next-line import/prefer-default-export
 export { addCard };

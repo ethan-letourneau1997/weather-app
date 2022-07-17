@@ -1,5 +1,6 @@
 import { cardButtonHandler } from "./index";
 
+// removes search bar from card bottom after location is selected
 const hideCardSearch = ((cardId) => {
   const searchRow = document.getElementById(`search-row-${cardId}`);
   const switchWrap = document.getElementById(`switch-wrap-${cardId}`);
@@ -24,6 +25,7 @@ const hideCardSearch = ((cardId) => {
   searchRow.replaceChild(switchBackWrap, switchWrap);
 });
 
+// adds search bar to bottom of card when button is clicked
 const showCardSearch = ((e) => {
   const cardId = e.target.id;
 
