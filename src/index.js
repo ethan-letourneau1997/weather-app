@@ -135,10 +135,12 @@ const cardButtonHandler = ((e) => {
 let cardNum = 1;
 
 const cardEventHandler = (() => {
-  addCard(cardNum);
-  const newCardButton = document.getElementById(`${cardNum}`);
-  newCardButton.addEventListener("click", cardButtonHandler);
-  cardNum++;
+  if (cardNum < 4) {
+    addCard(cardNum);
+    const newCardButton = document.getElementById(`${cardNum}`);
+    newCardButton.addEventListener("click", cardButtonHandler);
+    cardNum++;
+  }
 });
 
 const celButton = document.getElementById("cel-button");

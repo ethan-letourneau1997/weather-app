@@ -17,7 +17,7 @@ const hideCardSearch = ((cardId) => {
 
   const changeLocationBut = document.createElement("button");
   changeLocationBut.id = `${cardId}`;
-  changeLocationBut.innerText = "+";
+  changeLocationBut.innerText = "Change Location";
   changeLocationBut.classList.add("show-search");
   changeLocation.addEventListener("click", showCardSearch);
   changeLocation.append(changeLocationBut);
